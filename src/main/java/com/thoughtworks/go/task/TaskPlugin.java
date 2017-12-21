@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.thoughtworks.go;
+package com.thoughtworks.go.task;
 
 import com.thoughtworks.go.plugin.api.GoApplicationAccessor;
 import com.thoughtworks.go.plugin.api.GoPlugin;
@@ -47,7 +47,7 @@ public class TaskPlugin implements GoPlugin {
                 } else if ("view".equals(request.requestName())) {
                     return viewResponse(request);
                 }
-                return new DefaultGoPluginApiResponse(SUCCESS_RESPONSE_CODE, "{}");
+                throw new RuntimeException("Unhandled: " + request);
             }
         });
     }
