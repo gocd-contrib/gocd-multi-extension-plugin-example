@@ -45,6 +45,12 @@ public class NotificationPlugin implements GoPlugin {
                 if ("notifications-interested-in".equals(request.requestName())) {
                     return notificationsInterestedIn(request);
                 }
+                if ("go.plugin-settings.get-view".equals(request.requestName())) {
+                    return getView(request);
+                }
+                if ("go.plugin-settings.get-configuration".equals(request.requestName())) {
+                    return getConfiguration(request);
+                }
                 throw new RuntimeException("Unhandled: " + request);
             }
         });
@@ -53,8 +59,28 @@ public class NotificationPlugin implements GoPlugin {
     private GoPluginApiResponse notificationsInterestedIn(GoPluginApiRequest request) {
         return new DefaultGoPluginApiResponse(SUCCESS_RESPONSE_CODE, "{\n" +
                 "  \"notifications\": [\"stage-status\"]\n" +
-                "}"
-        );
+                "}");
+    }
+
+    private GoPluginApiResponse getView(GoPluginApiRequest request) {
+        return new DefaultGoPluginApiResponse(SUCCESS_RESPONSE_CODE, "{\n" +
+                "  \"template\": \"<div>some html</div>\"\n" +
+                "}");
+    }
+
+    private GoPluginApiResponse getConfiguration(GoPluginApiRequest request) {
+        return new DefaultGoPluginApiResponse(SUCCESS_RESPONSE_CODE, "{\n" +
+                "  \"url\": {\n" +
+                "    \"default-value\": \"\",\n" +
+                "    \"secure\": false,\n" +
+                "    \"required\": false\n" +
+                "  },\n" +
+                "  \"user\": {\n" +
+                "    \"default-value\": \"bob\",\n" +
+                "    \"secure\": false,\n" +
+                "    \"required\": false\n" +
+                "  }\n" +
+                "}");
     }
 
     @Override
