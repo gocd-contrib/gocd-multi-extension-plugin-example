@@ -51,6 +51,9 @@ public class NotificationPlugin implements GoPlugin {
                 if ("go.plugin-settings.get-configuration".equals(request.requestName())) {
                     return getConfiguration(request);
                 }
+                if ("go.plugin-settings.validate-configuration".equals(request.requestName())) {
+                    return validateConfiguration(request);
+                }
                 throw new RuntimeException("Unhandled: " + request);
             }
         });
@@ -81,6 +84,10 @@ public class NotificationPlugin implements GoPlugin {
                 "    \"required\": false\n" +
                 "  }\n" +
                 "}");
+    }
+
+    private GoPluginApiResponse validateConfiguration(GoPluginApiRequest request) {
+        return new DefaultGoPluginApiResponse(SUCCESS_RESPONSE_CODE, "[]");
     }
 
     @Override
