@@ -16,3 +16,13 @@ This example plugin implements three extensions:
 * [Task](https://github.com/arvindsv/gocd-multi-extension-plugin-example/blob/b7bd2bcd8080b1d496621b157e97d826c456ee3b/src/main/java/com/thoughtworks/go/task/TaskPlugin.java#L35)
 
 Only the analytics extension [responds to configuration requests](https://github.com/arvindsv/gocd-multi-extension-plugin-example/blob/b7bd2bcd8080b1d496621b157e97d826c456ee3b/src/main/java/com/thoughtworks/go/analytics/AnalyticsPlugin.java#L54-L62) in this plugin. The notification extension [responds with a 400 status](https://github.com/arvindsv/gocd-multi-extension-plugin-example/blob/b7bd2bcd8080b1d496621b157e97d826c456ee3b/src/main/java/com/thoughtworks/go/notification/NotificationPlugin.java#L52-L60).
+
+### Building this plugin
+
+Run:
+
+```
+gradle clean assemble
+```
+
+The plugin JAR file will be in `build/libs/`.
