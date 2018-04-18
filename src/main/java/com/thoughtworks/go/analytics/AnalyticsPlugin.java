@@ -51,13 +51,15 @@ public class AnalyticsPlugin implements GoPlugin {
         return withLogging("Analytics plugin: Server to plugin", request, new Action<GoPluginApiRequest, GoPluginApiResponse>() {
             @Override
             public GoPluginApiResponse call(GoPluginApiRequest request) {
-                /* Uncomment the next few lines to make the plugin fail, because more than one extension will support configuration. */
-//                if ("go.plugin-settings.get-view".equals(request.requestName())) {
-//                    return getView(request);
-//                }
-//                if ("go.plugin-settings.get-configuration".equals(request.requestName())) {
-//                    return getConfiguration(request);
-//                }
+                if ("go.plugin-settings.get-view".equals(request.requestName())) {
+                    return getView(request);
+                }
+                if ("go.plugin-settings.get-configuration".equals(request.requestName())) {
+                    return getConfiguration(request);
+                }
+                if ("go.plugin-settings.validate-configuration".equals(request.requestName())) {
+                    return validateConfiguration(request);
+                }
                 if ("go.cd.analytics.get-capabilities".equals(request.requestName())) {
                     return capabilities(request);
                 }
@@ -93,11 +95,25 @@ public class AnalyticsPlugin implements GoPlugin {
                 "}");
     }
 
+    private GoPluginApiResponse validateConfiguration(GoPluginApiRequest request) {
+        return new DefaultGoPluginApiResponse(SUCCESS_RESPONSE_CODE, "[]");
+    }
+
     private GoPluginApiResponse capabilities(GoPluginApiRequest request) {
         return new DefaultGoPluginApiResponse(SUCCESS_RESPONSE_CODE, "{\n" +
-                "  \"supports_pipeline_analytics\": true,\n" +
-                "  \"supports_analytics_dashboard\": true\n" +
-                "}\n");
+                "    \"supported_analytics\": [\n" +
+                "        {\n" +
+                "            \"id\": \"pipeline_level_chart_1\",\n" +
+                "            \"title\": \"Pipeline Chart 1\",\n" +
+                "            \"type\": \"pipeline\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"id\": \"top_level_chart_1\",\n" +
+                "            \"title\": \"Top Level Chart 1\",\n" +
+                "            \"type\": \"dashboard\"\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}");
     }
 
     private GoPluginApiResponse icon(GoPluginApiRequest request) {

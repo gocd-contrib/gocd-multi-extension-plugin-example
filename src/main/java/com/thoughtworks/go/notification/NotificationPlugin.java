@@ -28,6 +28,7 @@ import com.thoughtworks.go.util.Action;
 
 import java.util.Arrays;
 
+import static com.thoughtworks.go.plugin.api.response.DefaultGoPluginApiResponse.BAD_REQUEST;
 import static com.thoughtworks.go.plugin.api.response.DefaultGoPluginApiResponse.SUCCESS_RESPONSE_CODE;
 import static com.thoughtworks.go.util.Logging.withLogging;
 
@@ -45,14 +46,17 @@ public class NotificationPlugin implements GoPlugin {
                 if ("notifications-interested-in".equals(request.requestName())) {
                     return notificationsInterestedIn(request);
                 }
+                if ("stage-status".equals(request.requestName())) {
+                    return new DefaultGoPluginApiResponse(SUCCESS_RESPONSE_CODE, "{ \"status\": \"success\" }");
+                }
                 if ("go.plugin-settings.get-view".equals(request.requestName())) {
-                    return getView(request);
+                    return new DefaultGoPluginApiResponse(BAD_REQUEST, "");
                 }
                 if ("go.plugin-settings.get-configuration".equals(request.requestName())) {
-                    return getConfiguration(request);
+                    return new DefaultGoPluginApiResponse(BAD_REQUEST, "");
                 }
                 if ("go.plugin-settings.validate-configuration".equals(request.requestName())) {
-                    return validateConfiguration(request);
+                    return new DefaultGoPluginApiResponse(BAD_REQUEST, "");
                 }
                 throw new RuntimeException("Unhandled: " + request);
             }
@@ -67,7 +71,7 @@ public class NotificationPlugin implements GoPlugin {
 
     private GoPluginApiResponse getView(GoPluginApiRequest request) {
         return new DefaultGoPluginApiResponse(SUCCESS_RESPONSE_CODE, "{\n" +
-                "  \"template\": \"<div>some html</div>\"\n" +
+                "  \"template\": \"<div>some html for notification plugin</div>\"\n" +
                 "}");
     }
 
